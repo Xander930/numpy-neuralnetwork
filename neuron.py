@@ -1,6 +1,9 @@
+import numpy as np
 
 inputs = []
 weights = []
 bias = []
 
-output = inputs[0] * weights[0] + bias 
+outputs_layer1 = np.dot(inputs, np.array(weights).T) + bias
+
+outputs_layer2 = np.dot(outputs_layer1, np.array(weights).T) + bias
