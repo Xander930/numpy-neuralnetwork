@@ -4,6 +4,11 @@ inputs = []
 weights = []
 bias = []
 
-outputs_layer1 = np.dot(inputs, np.array(weights).T) + bias
+class Neuron:
+    def __init__(self, weights, bias):
+        self.weights = weights
+        self.bias = bias
 
-outputs_layer2 = np.dot(outputs_layer1, np.array(weights).T) + bias
+    def forward(self, inputs):
+        output = np.dot(inputs, np.array(self.weights).T) + self.bias
+        return output
