@@ -1,6 +1,6 @@
-inputs = []
+import numpy as np
 
-def ReLU(inputs):
-    output = []
-    for input in inputs:
-        output.append(max(0, input))
+
+class ReLU:
+    def forward(self, inputs):
+        self.output = np.maximum(0, inputs)
