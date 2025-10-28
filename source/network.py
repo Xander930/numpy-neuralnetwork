@@ -11,4 +11,6 @@ layer1 = Layer(2, 5)
 activation1 = ReLU()
 
 layer1.forward(X)
+
 activation1.forward(layer1.output)
+print(activation1.output)
