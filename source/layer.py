@@ -11,4 +11,4 @@ class Layer:
         self.bias = np.zeros((1, n_neurons))
 
     def forward(self, inputs):
-        self.output = np.dot(inputs, np.array(self.weights).T) + self.bias
+        self.output = np.dot(inputs, np.array(self.weights)) + self.bias
