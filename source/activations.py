@@ -6,11 +6,8 @@ class ReLU:
         self.output = np.maximum(0, inputs)
 
 
-def softmax(x):
-    exp_vals = []
-    norm_vals = []
-    for output in x:
-        exp_vals.append(np.exp(output))
-    norm_div = sum(exp_vals)
-    for val in exp_vals:
-        norm_vals.append(val / norm_div)
+class Softmax:
+    def forward(self, inputs):
+        exp_vals = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
+        probs = exp_vals / np.sum(exp_vals, axis=1, keepdims=True)
+        self.output = probs
