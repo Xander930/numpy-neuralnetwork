@@ -9,6 +9,7 @@ class Layer:
     def forward(self, inputs):
         self.output = np.dot(inputs, np.array(self.weights)) + self.bias
 
+
 class Loss:
     def calculate(self, output, y):
         sample_losses = self.forward(output, y)
