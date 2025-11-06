@@ -10,22 +10,9 @@ class Layer:
         self.output = np.dot(inputs, np.array(self.weights)) + self.bias
 
 
-class Loss:
-    def calculate(self, output, y):
-        sample_losses = self.forward(output, y)
-        batch_loss = np.mean(sample_losses)
-        return batch_loss
+def loss_mse(y, y_pred):
+    return np.mean((y - y_pred) ** 2)
 
 
-class CCE(Loss):
-    def forward(self, y_pred, y_true):
-        samples = len(y_pred)
-        y_pred_clip = np.clip(y_pred, 1e-7, 1 - 1e-7)
-
-        if len(y_true.shape) == 1:
-            conf_corrects = y_pred_clip[range(samples), y_true]
-        elif len(y_true.shape) == 2:
-            conf_corrects = np.sum(y_pred_clip * y_true, axis=1)
-
-        neg_log_probs = -np.log(conf_corrects)
-        return neg_log_probs
+def mse_prime(y, y_pred):
+    return 2 * (y_pred - y) / y.size
