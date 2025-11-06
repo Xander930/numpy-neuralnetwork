@@ -1,5 +1,6 @@
-from .activations import sigmoid, sigmoid_prime
-from .utils import Layer, mse_prime
+import numpy as np
+from activations import sigmoid, sigmoid_prime
+from utils import Layer, mse_prime
 
 
 class NeuralNet:
@@ -23,4 +24,20 @@ class NeuralNet:
         m = X.shape[0]
         dL_da2 = mse_prime(y, self.a2)
         da2_dz2 = sigmoid_prime(self.z2)
-        dz1 = dL_da2 * da2_dz2
+        dz2 = dL_da2 * da2_dz2
+        self.dW2 = np.dot(self.a1.T, dz2) / m
+        self.db2 = np.sum(dz2, axis=0, keepdims=True) / m
+        dz2_da1 = self.layer2.weights.T
+        da1 = np.dot(dz2, dz2_da1)
+        da1_dz1 = sigmoid_prime(self.z1)
+        dz1 = da1 * da1_dz1
+        self.dW1 = np.dot(X.T, dz1) / m
+        self.db1 = np.sum(dz1, axis=0, keepdims=True) / m
+
+    def update_weights(self):
+        self.layer2.weights -= self.learning_rate * self.dW2
+        self.layer2.bias -= self.learning_rate * self.db2
+        self.layer1.weights -= self.learning_rate * self.dW1
+        self.layer1.bias -= self.learning_rate * self.db1
+
+    
