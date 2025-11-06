@@ -1,6 +1,6 @@
 import numpy as np
 from activations import sigmoid, sigmoid_prime
-from utils import Layer, mse_prime
+from utils import Layer, loss_mse, mse_prime
 
 
 class NeuralNet:
@@ -40,4 +40,18 @@ class NeuralNet:
         self.layer1.weights -= self.learning_rate * self.dW1
         self.layer1.bias -= self.learning_rate * self.db1
 
-    
+    def train(self, X, y, epochs, verbose=True):
+        loss_hist = []
+        for epoch in range(epochs):
+            preds = self.forward(X)
+            loss = loss_mse(y, preds)
+            loss_hist.append(loss)
+            self.backward(X, y)
+            self.update_weights()
+        if verbose and (epoch % 1000 == 0 or epoch == epochs - 1):
+            print(f"epoch {epoch:5d} | loss: {loss:.6f}")
+        return loss_hist
+
+    def predict(self, X, threshold):
+        preds = self.forward(X)
+        return (preds >= threshold).astype(int)
