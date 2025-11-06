@@ -1,21 +1,26 @@
-from data import create_data
-from utils import CCE, Layer, ReLU, Softmax
+from .activations import sigmoid, sigmoid_prime
+from .utils import Layer, mse_prime
 
-X, y = create_data(100, 3)
 
-layer1 = Layer(2, 3)
-layer2 = Layer(3, 3)
+class NeuralNet:
+    def __init__(self, size_in, size_hidden, size_out, learning_rate):
+        self.learning_rate = learning_rate
+        self.layer1 = Layer(size_in, size_hidden)
+        self.layer2 = Layer(size_hidden, size_out)
+        self.z1 = None
+        self.a1 = None
+        self.z2 = None
+        self.a2 = None
 
-activ1 = ReLU()
-activ2 = Softmax()
+    def forward(self, X):
+        self.z1 = self.layer1.forward(X)
+        self.a1 = sigmoid(self.z1)
+        self.z2 = self.layer2.forward(self.a1)
+        self.a2 = sigmoid(self.z2)
+        return self.a2
 
-layer1.forward(X)
-activ1.forward(layer1.output)
-
-layer2.forward(activ1.output)
-activ2.forward(layer1.output)
-
-loss_f = CCE()
-loss = loss_f.calculate(activ2.output, y)
-
-print("Loss:", loss)
+    def backward(self, X, y):
+        m = X.shape[0]
+        dL_da2 = mse_prime(y, self.a2)
+        da2_dz2 = sigmoid_prime(self.z2)
+        dz1 = dL_da2 * da2_dz2
