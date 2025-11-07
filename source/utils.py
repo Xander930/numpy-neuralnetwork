@@ -8,6 +8,7 @@ class Layer:
 
     def forward(self, inputs):
         self.output = np.dot(inputs, np.array(self.weights)) + self.bias
+        return self.output
 
 
 def loss_mse(y, y_pred):
