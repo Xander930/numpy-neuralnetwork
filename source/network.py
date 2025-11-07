@@ -1,6 +1,6 @@
 import numpy as np
-from activations import sigmoid, sigmoid_prime
-from utils import Layer, loss_mse, mse_prime
+from .activations import sigmoid, sigmoid_prime
+from .utils import Layer, loss_mse, mse_prime
 
 
 class NeuralNet:
