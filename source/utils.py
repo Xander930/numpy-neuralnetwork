@@ -7,7 +7,7 @@ class Layer:
         self.bias = np.zeros((1, n_neurons))
 
     def forward(self, inputs):
-        self.output = np.dot(inputs, np.array(self.weights)) + self.bias
+        self.output = np.dot(inputs, self.weights) + self.bias
         return self.output
 
 
@@ -16,4 +16,4 @@ def loss_mse(y, y_pred):
 
 
 def mse_prime(y, y_pred):
-    return 2 * (y_pred - y) / y.size
+    return 2 * (y_pred - y)
