@@ -1,4 +1,5 @@
 import numpy as np
+
 from .activations import sigmoid, sigmoid_prime
 from .utils import Layer, loss_mse, mse_prime
 
@@ -8,10 +9,16 @@ class NeuralNet:
         self.learning_rate = learning_rate
         self.layer1 = Layer(size_in, size_hidden)
         self.layer2 = Layer(size_hidden, size_out)
+
         self.z1 = None
         self.a1 = None
         self.z2 = None
         self.a2 = None
+
+        self.dW1 = None
+        self.db1 = None
+        self.dW2 = None
+        self.db2 = None
 
     def forward(self, X):
         self.z1 = self.layer1.forward(X)
@@ -48,8 +55,8 @@ class NeuralNet:
             loss_hist.append(loss)
             self.backward(X, y)
             self.update_weights()
-        if verbose and (epoch % 1000 == 0 or epoch == epochs - 1):
-            print(f"epoch {epoch:5d} | loss: {loss:.6f}")
+            if verbose and epoch % 1000 == 0 or epoch == epochs - 1:
+                print(f"epoch {epoch:5d} | loss: {loss:.6f}")
         return loss_hist
 
     def predict(self, X, threshold):
