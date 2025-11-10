@@ -11,8 +11,7 @@ It's far from efficient, but the current network works. It is far slower than on
 
 This is a simple neural network, with 2 layers. The first has an input size of 2 (corresponding to 2 binary inputs), and a layer size of 4 neurons. The second has an input size of 4 (corresponding to the number of neurons in the previous layer), and a layer size of 1 neuron (corresponding to the single desired binary output). 
 
-Each layer's output is then fed into a sigmoid activation function, shown below.
- $$\sigma(z) = \frac{1} {1 + e^{-z}}$$ 
+Each layer's output is then fed into a sigmoid activation function, $$\sigma(z) = \frac{1} {1 + e^{-z}}$$ .
 This is a common activation function for binary classification problems, as it introduces non-linerality into the model as well as asymptotically approaching 0 as x increases to negaitve infinity and approaching 1 as x increases to infinity. This "smooths" outputs, making the numbers much easier to work with. It is also important during backpropagation, as it is differentiable at every point and is, as far as I am aware, the only function which is included in its derivative, which makes it computationally simple to model. 
 
 Sigmoid is not perfect, however, and I encountered one of its main issues during the creation of this network. During backpropagation, the sigmoid function can experience something called the Vanishing Gradient Problem. While updating weights and biases via gradient descent, if the gradient is too small the updates become insignificant. This can lead to learning slowing down or (as I saw in my case) the network sometimes stopping learning all together. My architecture has this problem, as with a learning rate of 0.5 it took 50k epochs to train to 100% accuracy, an excessively high number. Increasing the learning rate to 1 remedied this problem, but the network is stil rather slow.
