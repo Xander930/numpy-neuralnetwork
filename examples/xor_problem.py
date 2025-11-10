@@ -10,7 +10,7 @@ from source.network import NeuralNet
 
 def main():
     """
-    Main loop for actually running and training the network
+    Main loop for actually running and training the network.
     """
 
     # input (X) and output (y) variable matrices
