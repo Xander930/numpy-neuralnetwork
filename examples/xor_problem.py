@@ -26,10 +26,10 @@ def main():
     print("Beginning Training...")
 
     #initialize neural network with parameters
-    nn = NeuralNet(size_in=2, size_hidden=4, size_out=1, learning_rate=0.5)
+    nn = NeuralNet(size_in=2, size_hidden=4, size_out=1, learning_rate=1)
 
     #train neural network for a specified number of epochs
-    loss_hist = nn.train(X, y, epochs=50000, verbose=True)
+    loss_hist = nn.train(X, y, epochs=10000, verbose=True)
 
     print("Results: ")
 
